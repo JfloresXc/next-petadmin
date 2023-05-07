@@ -15,7 +15,6 @@ function Button ({
   full = false,
   handleClick = () => {}
 }) {
-  console.log(design)
   const styles = `${DESIGNS[design]} ${full && 'w-full'}`
 
   if (location) {
