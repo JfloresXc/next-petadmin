@@ -1,17 +1,12 @@
-import React from "react";
+import React from 'react'
 
-// reactstrap components
-// import { Spinner } from "reactstrap";
-
-// core components
-
-export default function PageChange(props) {
+export default function PageChange (props) {
   return (
     <div>
       <div
         className="bg-cover fixed z-40 w-full h-full top-0 left-0"
         style={{
-          backgroundImage: "url('/img/img-1-1000x600.jpg')",
+          backgroundImage: "url('/img/img-1-1000x600.jpg')"
         }}
       ></div>
       <div className="top-0 left-0 w-full h-full block z-50 absolute bg-black bg-opacity-50"></div>
@@ -24,5 +19,5 @@ export default function PageChange(props) {
         </h4>
       </div>
     </div>
-  );
+  )
 }

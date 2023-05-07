@@ -429,7 +429,7 @@ export default function Index () {
                   This extension comes a lot of fully coded examples that help
                   you get started faster. You can adjust the colors and also the
                   programming language. You can change the text and images and
-                  you're good to go.
+                  youre good to go.
                 </p>
                 <ul className="list-none mt-6">
                   <li className="py-2">
