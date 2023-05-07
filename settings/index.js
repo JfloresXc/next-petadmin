@@ -1,6 +1,4 @@
-const { BACKEND_HOST } = process.env
-
-const API_URL_SERVER_BACKEND = `${BACKEND_HOST}/api`
+const API_URL_SERVER_BACKEND = `${process.env.BACKEND_HOST}/api`
 const API_URL_API_FRONTEND = '/api'
 
 export { API_URL_SERVER_BACKEND, API_URL_API_FRONTEND }
