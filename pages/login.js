@@ -6,14 +6,14 @@ import FormLogin from '@/components/forms/FormLogin'
 export default function Login () {
   return (
     <>
-      <div className="container mx-auto px-4 h-full">
+      <div className="family-kufam container mx-auto px-4 h-full login">
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-4/12 px-4">
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white border-0">
               <div className="rounded-t mb-0 px-6 py-6">
                 <div className="text-center mb-3">
                   <h6 className="text-blueGray-500 text-sm font-bold">
-                    Sign in with
+                    Inicia sesión con
                   </h6>
                 </div>
                 <div className="btn-wrapper text-center">
@@ -36,7 +36,7 @@ export default function Login () {
               </div>
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <div className="text-blueGray-400 text-center mb-3 font-bold">
-                  <small>Or sign in with credentials</small>
+                  <small>O con credenciales</small>
                 </div>
                 <FormLogin />
               </div>
@@ -46,20 +46,27 @@ export default function Login () {
                 <a
                   href="#pablo"
                   onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
+                  className="text-blueGray-500"
                 >
-                  <small>Forgot password?</small>
+                  <small>¿Olvidaste la contraseña?</small>
                 </a>
               </div>
               <div className="w-1/2 text-right">
-                <Link href="/auth/register" className="text-blueGray-200">
-                    <small>Create new account</small>
+                <Link href="/auth/register" className="text-blueGray-500">
+                    <small>Crear nueva cuenta</small>
                 </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <style jsx>{`
+          .login{
+            margin-bottom: 3em;
+            padding-top: calc(var(--height-navbar) + 2em);
+          }
+        `}
+      </style>
     </>
   )
 }

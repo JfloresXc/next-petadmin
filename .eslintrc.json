@@ -6,7 +6,7 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard-with-typescript"
+        "standard"
     ],
     "overrides": [
     ],
@@ -18,7 +18,8 @@
         "react"
     ],
     "rules": {
+        "react/react-in-jsx-scope": 0,
         "react/prop-types": 0,
-        "react/react-in-jsx-scope": 0
+        "react/no-unknown-property": 0
     }
 }

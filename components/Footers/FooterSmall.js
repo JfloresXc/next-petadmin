@@ -6,23 +6,24 @@ export default function FooterSmall (props) {
       <footer
         className={
           (props.absolute
-            ? 'absolute w-full bottom-0 bg-blueGray-800'
+            ? 'absolute w-full bottom-0 bg-grey'
             : 'relative') + ' pb-6'
         }
       >
         <div className="container mx-auto px-4">
-          <hr className="mb-6 border-b-1 border-blueGray-600" />
+          <hr className="mb-6 border-b-1 border-white" />
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="mx-auto w-full md:w-4/12 px-4">
-              <div className="text-sm text-blueGray-500 font-semibold py-1 text-center">
-                Copyright © {new Date().getFullYear()}{' '}
+              <div className="text-sm text-white font-semibold py-1 text-center">
+              Copyright © {new Date().getFullYear()} Orejitas y colitas by{' '}
                 <a
                   href="https://jfloresxc.github.io"
-                  className="text-white hover:text-blueGray-300 text-sm font-semibold py-1"
-                  target="_blank" rel="noreferrer"
+                  target='_blank'
+                  className="text-white hover:text-blueGray-800" rel="noreferrer"
                 >
                   Jfloresxc
                 </a>
+                .
               </div>
             </div>
           </div>

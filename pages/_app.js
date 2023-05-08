@@ -30,16 +30,16 @@ export default class MyApp extends App {
     const comment = document.createComment(`
 
 =========================================================
-* Orejitas y colitas - v1.1.0 based on Tailwind Starter Kit by Creative Tim
+* Orejitas y colitas - v1.1.0 based on Tailwind Starter Kit by Jfloresxc
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/notus-nextjs
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Copyright 2021 Jfloresxc (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/notus-nextjs/blob/main/LICENSE.md)
 
 * Tailwind Starter Kit Page: https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation
 
-* Coded by Creative Tim
+* Coded by Jfloresxc
 
 =========================================================
 
@@ -71,7 +71,7 @@ export default class MyApp extends App {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <title>Orejitas y colitas by Creative Tim</title>
+          <title>Orejitas y colitas by Jfloresxc</title>
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
         </Head>
         <Layout>
