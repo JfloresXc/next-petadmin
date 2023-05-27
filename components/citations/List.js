@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-// components
-
-import TableDropdown from 'components/Dropdowns/TableDropdown.js'
 import RowDropdown from '../Dropdowns/RowDropdown'
-import Button from '../button'
 import AddCitationModal from '../modal/AddCitation'
+import Button from '../button'
+import Link from 'next/link'
 
 const CITAS = [
   {
@@ -25,7 +22,7 @@ const CITAS = [
   }
 ]
 
-export default function CardTable ({ color }) {
+export default function ListOfCitations ({ color }) {
   return (
     <>
       <div
@@ -47,7 +44,13 @@ export default function CardTable ({ color }) {
               </h3>
             </div>
             <div>
-              <AddCitationModal />
+              <Link
+                href="/admin/citations/add"
+                className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="button"
+                >
+                Agregar cita
+                </Link>
             </div>
           </div>
         </div>
@@ -159,10 +162,10 @@ export default function CardTable ({ color }) {
   )
 }
 
-CardTable.defaultProps = {
+ListOfCitations.defaultProps = {
   color: 'light'
 }
 
-CardTable.propTypes = {
+ListOfCitations.propTypes = {
   color: PropTypes.oneOf(['light', 'dark'])
 }

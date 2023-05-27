@@ -1,31 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-
-// components
-
-import TableDropdown from 'components/Dropdowns/TableDropdown.js'
 import RowDropdown from '../Dropdowns/RowDropdown'
-import Button from '../button'
-import AddCitationModal from '../modal/AddCitation'
+import Link from 'next/link'
+import { useClients } from '@/hooks/useClients'
 
-const CITAS = [
-  {
-    speciality: 'Pediatría',
-    description: 'Operar por una gripe',
-    dateOfAttention: '2023-05-29T11:24:00',
-    turn: 'Mañana',
-    pet: { name: 'Chichito' }
-  },
-  {
-    speciality: 'Pediatría',
-    description: 'Operar por una gripe',
-    dateOfAttention: '2023-05-29T11:24:00',
-    turn: 'Mañana',
-    pet: { name: 'Motitas' }
-  }
-]
+export default function ListOfClients ({ color }) {
+  const { clients, getAllClients, loading } = useClients()
 
-export default function CardTable ({ color }) {
+  useEffect(() => {
+    getAllClients()
+  }, [])
+
   return (
     <>
       <div
@@ -43,11 +28,17 @@ export default function CardTable ({ color }) {
                   (color === 'light' ? 'text-blueGray-700' : 'text-white')
                 }
               >
-                Citas
+                {loading ? 'Cargando...' : 'Lista de clientes'}
               </h3>
             </div>
             <div>
-              <AddCitationModal />
+              <Link
+                href="/admin/clients/add"
+                className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                type="button"
+                >
+                Agregar cliente
+                </Link>
             </div>
           </div>
         </div>
@@ -64,7 +55,7 @@ export default function CardTable ({ color }) {
                       : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
                   }
                 >
-                  Fecha de atención
+                  Nombre
                 </th>
                 <th
                   className={
@@ -74,7 +65,7 @@ export default function CardTable ({ color }) {
                       : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
                   }
                 >
-                  Turno
+                  Apellidos
                 </th>
                 <th
                   className={
@@ -84,7 +75,7 @@ export default function CardTable ({ color }) {
                       : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
                   }
                 >
-                  Mascota
+                  Fecha de cumpleños
                 </th>
                 <th
                   className={
@@ -94,7 +85,7 @@ export default function CardTable ({ color }) {
                       : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
                   }
                 >
-                  Especialidad
+                  Dni
                 </th>
                 <th
                   className={
@@ -104,7 +95,17 @@ export default function CardTable ({ color }) {
                       : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
                   }
                 >
-                  Descripción
+                  Correo electrónico
+                </th>
+                <th
+                  className={
+                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
+                    (color === 'light'
+                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
+                  }
+                >
+                  Teléfono
                 </th>
                 <th
                   className={
@@ -117,37 +118,43 @@ export default function CardTable ({ color }) {
               </tr>
             </thead>
             <tbody>
-              {CITAS.map((cita, index) => {
-                const { speciality, description, dateOfAttention, turn, pet } = cita
+              {clients.map && clients?.map((client, index) => {
+                const {
+                  name,
+                  surname,
+                  birthdate,
+                  dni,
+                  email,
+                  phone,
+                  id
+                } = client
                 return <tr key={index}>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                  <span
-                    className={
-                      'ml-3 font-bold ' +
-                      +(color === 'light' ? 'text-blueGray-600' : 'text-white')
-                    }
-                  >
-                    {dateOfAttention}
-                  </span>
+                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                    {name}
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {turn}
+                    {surname}
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  {pet.name}
+                  {birthdate.substring(0, 10)}
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <div className="flex">
-                    {speciality}
+                    {dni}
                   </div>
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <div className="flex items-center">
-                    {description}
+                    {email}
+                  </div>
+                </td>
+                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                  <div className="flex items-center">
+                    {phone}
                   </div>
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                  <RowDropdown />
+                  <RowDropdown linkEdit={`/admin/clients/${id}`} />
                 </td>
               </tr>
               })}
@@ -159,10 +166,10 @@ export default function CardTable ({ color }) {
   )
 }
 
-CardTable.defaultProps = {
+ListOfClients.defaultProps = {
   color: 'light'
 }
 
-CardTable.propTypes = {
+ListOfClients.propTypes = {
   color: PropTypes.oneOf(['light', 'dark'])
 }

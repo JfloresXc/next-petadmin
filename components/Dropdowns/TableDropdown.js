@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createPopper } from '@popperjs/core'
 
 const NotificationDropdown = () => {
-  // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false)
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false)
   const btnDropdownRef = React.createRef()
   const popoverDropdownRef = React.createRef()
   const openDropdownPopover = () => {
@@ -15,6 +14,7 @@ const NotificationDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false)
   }
+
   return (
     <>
       <a
