@@ -7,6 +7,7 @@ export default function FormCitation () {
   })
 
   const handleSubmit = async (event) => {
+    handleChange()
     event.preventDefault()
   }
 

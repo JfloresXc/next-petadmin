@@ -1,7 +1,4 @@
 import React from 'react'
-
-import UserDropdown from 'components/Dropdowns/UserDropdown.js'
-import Dropdown from '../Dropdowns/RowDropdown'
 import SettingDropdown from '../Dropdowns/SettingDropdown'
 
 export default function Navbar () {

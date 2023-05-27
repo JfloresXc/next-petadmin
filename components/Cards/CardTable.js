@@ -1,11 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-// components
-
-import TableDropdown from 'components/Dropdowns/TableDropdown.js'
 import RowDropdown from '../Dropdowns/RowDropdown'
-import Button from '../button'
 import AddCitationModal from '../modal/AddCitation'
 
 const CITAS = [

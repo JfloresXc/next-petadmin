@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import RowDropdown from '../Dropdowns/RowDropdown'
-import AddCitationModal from '../modal/AddCitation'
-import Button from '../button'
 import Link from 'next/link'
 
 const CITAS = [
