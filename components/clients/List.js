@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
 import RowDropdown from '../Dropdowns/RowDropdown'
 import Link from 'next/link'
 import { useClients } from '@/hooks/useClients'
 
-export default function ListOfClients ({ color }) {
+export default function ListOfClients () {
+  const color = 'light'
   const { clients, getAllClients, loading } = useClients()
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function ListOfClients ({ color }) {
             </div>
           </div>
         </div>
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-x-auto max-h-px">
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
@@ -164,12 +164,4 @@ export default function ListOfClients ({ color }) {
       </div>
     </>
   )
-}
-
-ListOfClients.defaultProps = {
-  color: 'light'
-}
-
-ListOfClients.propTypes = {
-  color: PropTypes.oneOf(['light', 'dark'])
 }

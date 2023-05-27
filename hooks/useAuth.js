@@ -27,7 +27,7 @@ export const useAuth = () => {
       const { token } = data
       setJwt(token)
       window.localStorage.setItem('jwt', token)
-      router.push('admin/settings')
+      router.push('admin/clients/list')
     } catch (error) {
       console.error(error)
     }

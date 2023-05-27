@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-export default function SidebarLink ({ label, icon = 'tools', href = '/admin/dashboard' }) {
+export default function SidebarLink ({ label, icon = 'grip-lines-vertical', href = '/admin/dashboard' }) {
   const router = useRouter()
   return (
     <>

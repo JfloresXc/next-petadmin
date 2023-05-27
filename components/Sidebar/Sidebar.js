@@ -1,9 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-
-import NotificationDropdown from 'components/Dropdowns/NotificationDropdown.js'
-import UserDropdown from 'components/Dropdowns/UserDropdown.js'
 import SidebarLink from './SidebarLink'
+import SettingDropdown from '../Dropdowns/SettingDropdown'
 
 export default function Sidebar () {
   const [collapseShow, setCollapseShow] = React.useState('hidden')
@@ -24,16 +22,13 @@ export default function Sidebar () {
             <div
               className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             >
-              Orejitas y colitas
+              Orejitas y colitas admin
             </div>
           </Link>
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
             <li className="inline-block relative">
-              <NotificationDropdown />
-            </li>
-            <li className="inline-block relative">
-              <UserDropdown />
+              <SettingDropdown />
             </li>
           </ul>
           {/* Collapse */}
@@ -51,7 +46,7 @@ export default function Sidebar () {
                     <div
                       className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                     >
-                      Orejitas y colitas
+                      Orejitas y colitas admin
                     </div>
                   </Link>
                 </div>
@@ -86,13 +81,16 @@ export default function Sidebar () {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
-                <SidebarLink label={'Tables'} href='/admin/tables'/>
-              </li>
-              <li className="items-center">
                 <SidebarLink label={'Citas'} href='/admin/citations/list'/>
               </li>
               <li className="items-center">
+                <SidebarLink label={'Mascotas'} href='/admin/pets/list'/>
+              </li>
+              <li className="items-center">
                 <SidebarLink label={'Clientes'} href='/admin/clients/list'/>
+              </li>
+              <li className="items-center">
+                <SidebarLink label={'Veterinarios'} href='/admin/vets/list'/>
               </li>
               <li className="items-center">
                 <SidebarLink label={'Settings'} href='/admin/settings'/>
