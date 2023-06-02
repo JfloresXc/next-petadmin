@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import InputGroup from './Input'
-import { useClients } from '@/hooks/useClients'
+import { useVets } from '@/hooks/useVets'
 import { useRouter } from 'next/router'
 
-export default function FormClient () {
-  const { addClient, getClientForId, editClient } = useClients()
+export default function FormVet () {
+  const { addVet, getVetForId, editVet } = useVets()
   const router = useRouter()
   const id = router.query.id
-  const [client, setClient] = useState({
+  const [vet, setVet] = useState({
     name: '',
     surname: '',
     birthdate: '',
@@ -18,23 +18,23 @@ export default function FormClient () {
 
   useEffect(() => {
     if (id) {
-      getClientForId(id)
-        .then((client) => {
-          setClient(client)
+      getVetForId(id)
+        .then((vet) => {
+          if (vet) setVet(vet)
         })
     }
-  }, [setClient])
+  }, [setVet])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!id) addClient(client)
-    else editClient(id, client)
+    if (!id) addVet(vet)
+    else editVet(id, vet)
   }
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setClient({ ...client, [name]: value })
+    setVet({ ...vet, [name]: value })
   }
 
   return (
@@ -43,7 +43,7 @@ export default function FormClient () {
             <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
                 <h6 className="text-blueGray-700 text-xl font-bold">
-                    {id ? 'Editar cliente' : 'Agregar cliente'}
+                    {id ? 'Editar veterinario' : 'Agregar veterinario'}
                 </h6>
             </div>
             </div>
@@ -58,14 +58,14 @@ export default function FormClient () {
                     name={'name'}
                     placeholder={'Nombre'}
                     handleChange={handleChange}
-                    defaultValue={client.name}
+                    defaultValue={vet.name}
                 />
                 <InputGroup
                     label='Apellidos'
                     name={'surname'}
                     placeholder={'Apellidos'}
                     handleChange={handleChange}
-                    defaultValue={client.surname}
+                    defaultValue={vet.surname}
                 />
                 <InputGroup
                     label='Fecha de cumpleaños'
@@ -73,36 +73,36 @@ export default function FormClient () {
                     placeholder={'Fecha de cumpleaños'}
                     handleChange={handleChange}
                     type='date'
-                    defaultValue={client.birthdate.substring(0, 10)}
+                    defaultValue={vet.birthdate.substring(0, 10)}
                 />
                 <InputGroup
                     label='Dni'
                     name={'dni'}
                     placeholder={'Dni'}
                     handleChange={handleChange}
-                    defaultValue={client.dni}
+                    defaultValue={vet.dni}
                 />
                 <InputGroup
                     label='Correo electrónico'
                     name={'email'}
                     placeholder={'Correo electrónico'}
                     handleChange={handleChange}
-                    defaultValue={client.email}
+                    defaultValue={vet.email}
                 />
                 <InputGroup
                     label='Telefono'
                     name={'phone'}
                     placeholder={'Telefono'}
                     handleChange={handleChange}
-                    defaultValue={client.phone}
+                    defaultValue={vet.phone}
                 />
 
                 </div>
                 <button
-                className='block w-full mt-5 bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150'
-                type='submit'
+                    className='block w-full mt-5 bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150'
+                    type='submit'
                 >
-                   {id ? 'Editar cliente' : 'Agregar cliente'}
+                   {id ? 'Editar veterinario' : 'Agregar veterinario'}
                 </button>
             </form>
             </div>

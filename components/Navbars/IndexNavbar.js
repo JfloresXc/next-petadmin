@@ -58,7 +58,7 @@ export default function Navbar (props) {
                 </a>
               </li>
 
-              <li className="flex items-center">
+              <li className="flex items-center mr-3">
                 <a
                   className="hover:text-blueGray-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="https://github.com/creativetimofficial/notus-nextjs?ref=nnjs-index-navbar"

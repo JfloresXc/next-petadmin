@@ -92,9 +92,9 @@ export default function Sidebar () {
               <li className="items-center">
                 <SidebarLink label={'Veterinarios'} href='/admin/vets/list'/>
               </li>
-              <li className="items-center">
+              {/* <li className="items-center">
                 <SidebarLink label={'Settings'} href='/admin/settings'/>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

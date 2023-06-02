@@ -9,7 +9,7 @@ export default function FormLogin () {
     password: ''
   })
   const { email, password } = credentials
-  const { login } = useAuth()
+  const { login, isLoading } = useAuth()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -69,7 +69,11 @@ export default function FormLogin () {
           </div>
 
           <div className="text-center mt-6">
-              <Button label="Iniciar sesión" type='subtmit' full={true}/>
+              <Button
+                label={isLoading ? 'Cargando...' : 'Iniciar sesión'}
+                type='subtmit'
+                full={true}
+              />
           </div>
       </form>
       <style jsx>{`

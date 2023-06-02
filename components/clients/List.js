@@ -2,10 +2,18 @@ import React, { useEffect } from 'react'
 import RowDropdown from '../Dropdowns/RowDropdown'
 import Link from 'next/link'
 import { useClients } from '@/hooks/useClients'
+import InputSearch from '../forms/InputSearch'
+
+const HEADS = ['Nombre', 'Apellidos', 'Fecha de Cumpleaños', 'Dni', 'Correo electrónico', 'Número de teléfono']
 
 export default function ListOfClients () {
   const color = 'light'
-  const { clients, getAllClients, loading } = useClients()
+  const {
+    clients: data,
+    clientsFiltered: dataFiltered,
+    getAllClients,
+    setClientsFiltered
+  } = useClients()
 
   useEffect(() => {
     getAllClients()
@@ -28,7 +36,7 @@ export default function ListOfClients () {
                   (color === 'light' ? 'text-blueGray-700' : 'text-white')
                 }
               >
-                {loading ? 'Cargando...' : 'Lista de clientes'}
+                Lista de clientes
               </h3>
             </div>
             <div>
@@ -42,83 +50,35 @@ export default function ListOfClients () {
             </div>
           </div>
         </div>
+        <div className="rounded-t mb-0 px-4 py-3 border-0">
+          <div className="flex flex-wrap items-center">
+            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                <InputSearch items={data} setItemsFiltered={setClientsFiltered}/>
+            </div>
+          </div>
+        </div>
         <div className="block w-full overflow-x-auto max-h-px">
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                >
-                  Nombre
-                </th>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                >
-                  Apellidos
-                </th>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                >
-                  Fecha de cumpleños
-                </th>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                >
-                  Dni
-                </th>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                >
-                  Correo electrónico
-                </th>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                >
-                  Teléfono
-                </th>
-                <th
-                  className={
-                    'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                    (color === 'light'
-                      ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                      : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                  }
-                ></th>
+              {HEADS.map((headKey, index) => (
+                    <th
+                        key={index}
+                        className={
+                        'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
+                        (color === 'light'
+                          ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                          : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
+                        }
+                    >
+                        {headKey}
+                    </th>
+              ))}
               </tr>
             </thead>
             <tbody>
-              {clients.map && clients?.map((client, index) => {
+              {dataFiltered.map && dataFiltered?.map((client, index) => {
                 const {
                   name,
                   surname,

@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
@@ -7,7 +7,7 @@ function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Dropdown ({ linkEdit = '', linkDelete = '' }) {
+function Dropdown ({ linkEdit = '', linkDelete = '' }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -59,3 +59,5 @@ export default function Dropdown ({ linkEdit = '', linkDelete = '' }) {
     </Menu>
   )
 }
+
+export default React.memo(Dropdown)

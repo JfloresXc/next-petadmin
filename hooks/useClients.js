@@ -2,13 +2,16 @@ import { API_URL_API_FRONTEND } from '@/settings'
 import { handleError } from '@/utils/error'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useLoading } from './useLoading'
 
 export function useClients () {
   const [clients, setClients] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [clientsFiltered, setClientsFiltered] = useState([])
+  const { showLoading, hideLoading } = useLoading()
   const router = useRouter()
 
   const getAllClients = async () => {
+    showLoading()
     const response = await fetch(`${API_URL_API_FRONTEND}/clients/getAll`,
       {
         method: 'GET',
@@ -19,7 +22,9 @@ export function useClients () {
     const data = await response.json()
     handleError(data)
     setClients(data)
-    setLoading(false)
+    setClientsFiltered(data)
+    hideLoading()
+    return data
   }
 
   const addClient = async (client) => {
@@ -37,18 +42,24 @@ export function useClients () {
   }
 
   const getClientForId = async (id) => {
-    const response = await fetch(`${API_URL_API_FRONTEND}/clients/getClientForId`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ id }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-    const data = await response.json()
-    handleError(data)
-
-    return data
+    showLoading()
+    try {
+      const response = await fetch(`${API_URL_API_FRONTEND}/clients/getClientForId`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ id }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      const data = await response.json()
+      hideLoading()
+      handleError(data)
+      return data
+    } catch (error) {
+      handleError({ isError: true, message: error.message })
+      hideLoading()
+    }
   }
 
   const editClient = async (id, client) => {
@@ -67,10 +78,11 @@ export function useClients () {
 
   return {
     clients,
-    loading,
     getAllClients,
     getClientForId,
     addClient,
-    editClient
+    editClient,
+    clientsFiltered,
+    setClientsFiltered
   }
 }

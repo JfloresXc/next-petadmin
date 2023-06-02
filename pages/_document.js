@@ -18,6 +18,7 @@ class MyDocument extends Document {
         <body className="text-blueGray-700 antialiased">
           <div id="page-transition"></div>
           <Main />
+          <div id="portal"></div>
           <NextScript />
         </body>
       </Html>

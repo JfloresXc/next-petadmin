@@ -4,6 +4,8 @@ import Sidebar from 'components/Sidebar/Sidebar.js'
 import HeaderStats from 'components/Headers/HeaderStats.js'
 import FooterAdmin from 'components/Footers/FooterAdmin.js'
 import AuthContext from '@/contexts/AuthContext'
+import { Portal } from '@/components/modal/Portal'
+import Spinner from '@/components/spinner'
 
 export default function Admin ({ children }) {
   return (
@@ -18,6 +20,11 @@ export default function Admin ({ children }) {
             {children}
           </div>
           <FooterAdmin />
+          <Portal>
+            <div id='modal-root'>
+              <Spinner />
+            </div>
+          </Portal>
         </div>
       </div>
     </AuthContext>

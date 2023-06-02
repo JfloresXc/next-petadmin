@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { AuthContext } from '@/contexts/AuthContext'
@@ -9,9 +9,11 @@ const HEADERS = { 'Content-Type': 'application/json' }
 
 export const useAuth = () => {
   const { jwt, setJwt } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const login = async ({ email, password }) => {
+    setLoading(true)
     try {
       const URL = `${API_URL_API_FRONTEND}/auth/login`
       const response = await fetch(URL, {
@@ -21,6 +23,7 @@ export const useAuth = () => {
       })
       const data = await response.json()
       const { isError } = handleError(data)
+      setLoading(false)
 
       if (isError) return
 
@@ -29,6 +32,7 @@ export const useAuth = () => {
       window.localStorage.setItem('jwt', token)
       router.push('admin/clients/list')
     } catch (error) {
+      setLoading(false)
       console.error(error)
     }
   }
@@ -39,9 +43,7 @@ export const useAuth = () => {
         method: 'GET'
       })
 
-      window.localStorage.removeItem('jwt')
-      window.localStorage.removeItem('publications')
-      window.localStorage.removeItem('collections')
+      window.localStorage.clear()
       setJwt(null)
       router.push('login')
     } catch (error) {
@@ -51,6 +53,7 @@ export const useAuth = () => {
 
   return {
     isLogged: Boolean(jwt),
+    isLoading: Boolean(loading),
     jwt,
     setJwt,
     login,

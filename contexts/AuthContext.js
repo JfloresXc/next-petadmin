@@ -4,7 +4,7 @@ const Context = React.createContext({})
 
 export default function AuthContext ({ children }) {
   const [jwt, setJwt] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const token = window.localStorage.getItem('jwt')

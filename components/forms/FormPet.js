@@ -1,40 +1,52 @@
 import { useState, useEffect } from 'react'
 import InputGroup from './Input'
+import Textarea from './TextArea'
 import { useClients } from '@/hooks/useClients'
 import { useRouter } from 'next/router'
+import Select from './Select'
+import { usePets } from '@/hooks/usePets'
 
-export default function FormClient () {
-  const { addClient, getClientForId, editClient } = useClients()
+export default function FormPet () {
+  const { getAllClients, clients } = useClients()
+  const { getPetForId, addPet, editPet } = usePets()
   const router = useRouter()
   const id = router.query.id
-  const [client, setClient] = useState({
+  const [pet, setPet] = useState({
     name: '',
     surname: '',
     birthdate: '',
-    dni: '',
-    email: '',
-    phone: ''
+    specie: '',
+    breed: '',
+    weight: '',
+    medicalInformation: '',
+    address: '',
+    idClient: ''
   })
 
   useEffect(() => {
-    if (id) {
-      getClientForId(id)
-        .then((client) => {
-          setClient(client)
-        })
-    }
-  }, [setClient])
+    getAllClients().then((clients) => {
+      if (id) {
+        getPetForId(id)
+          .then((pet) => {
+            pet.idClient = pet.client.id
+            setPet(pet)
+          })
+      } else {
+        setPet((petBefore) => ({ ...petBefore, idClient: clients[0]?.id }))
+      }
+    })
+  }, [setPet])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!id) addClient(client)
-    else editClient(id, client)
+    if (!id) addPet(pet)
+    else editPet(id, pet)
   }
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setClient({ ...client, [name]: value })
+    setPet({ ...pet, [name]: value })
   }
 
   return (
@@ -43,14 +55,14 @@ export default function FormClient () {
             <div className="rounded-t bg-white mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
                 <h6 className="text-blueGray-700 text-xl font-bold">
-                    {id ? 'Editar cliente' : 'Agregar cliente'}
+                    {id ? 'Editar mascota' : 'Agregar mascota'}
                 </h6>
             </div>
             </div>
             <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
             <form onSubmit={handleSubmit}>
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                Datos personales
+                    Sus datos
                 </h6>
                 <div className="flex flex-wrap">
                 <InputGroup
@@ -58,14 +70,14 @@ export default function FormClient () {
                     name={'name'}
                     placeholder={'Nombre'}
                     handleChange={handleChange}
-                    defaultValue={client.name}
+                    defaultValue={pet.name}
                 />
                 <InputGroup
                     label='Apellidos'
                     name={'surname'}
                     placeholder={'Apellidos'}
                     handleChange={handleChange}
-                    defaultValue={client.surname}
+                    defaultValue={pet.surname}
                 />
                 <InputGroup
                     label='Fecha de cumpleaños'
@@ -73,28 +85,54 @@ export default function FormClient () {
                     placeholder={'Fecha de cumpleaños'}
                     handleChange={handleChange}
                     type='date'
-                    defaultValue={client.birthdate.substring(0, 10)}
+                    defaultValue={pet.birthdate.substring(0, 10)}
                 />
                 <InputGroup
-                    label='Dni'
-                    name={'dni'}
-                    placeholder={'Dni'}
+                    label='Especie'
+                    name={'specie'}
+                    placeholder={'Especie'}
                     handleChange={handleChange}
-                    defaultValue={client.dni}
+                    defaultValue={pet.specie}
                 />
                 <InputGroup
-                    label='Correo electrónico'
-                    name={'email'}
-                    placeholder={'Correo electrónico'}
+                    label='Raza'
+                    name={'breed'}
+                    placeholder={'Raza'}
                     handleChange={handleChange}
-                    defaultValue={client.email}
+                    defaultValue={pet.breed}
                 />
                 <InputGroup
-                    label='Telefono'
-                    name={'phone'}
-                    placeholder={'Telefono'}
+                    label='Peso'
+                    name={'weight'}
+                    placeholder={'Peso'}
                     handleChange={handleChange}
-                    defaultValue={client.phone}
+                    defaultValue={pet.weight}
+                    type='number'
+                />
+
+                <InputGroup
+                    label='Dirección de contacto'
+                    name={'address'}
+                    placeholder={'Dirección de contacto'}
+                    handleChange={handleChange}
+                    defaultValue={pet.address}
+                />
+
+                <Select
+                    label='Dueño'
+                    name={'idClient'}
+                    placeholder={'Dueño'}
+                    handleChange={handleChange}
+                    defaultValue={pet.client}
+                    items={clients}
+                />
+
+                <Textarea
+                    label='Información médica'
+                    name={'medicalInformation'}
+                    placeholder={'Información médica'}
+                    handleChange={handleChange}
+                    defaultValue={pet.medicalInformation}
                 />
 
                 </div>
@@ -102,7 +140,7 @@ export default function FormClient () {
                 className='block w-full mt-5 bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150'
                 type='submit'
                 >
-                   {id ? 'Editar cliente' : 'Agregar cliente'}
+                   {id ? 'Editar mascota' : 'Agregar mascota'}
                 </button>
             </form>
             </div>
