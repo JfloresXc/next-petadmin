@@ -7,7 +7,8 @@ export default function Input ({
   defaultValue,
   name,
   placeholder,
-  handleChange
+  handleChange,
+  disabled = false
 }) {
   return (
     <div className={`w-full lg:w-${widthFlex}/12 px-4`}>
@@ -25,6 +26,7 @@ export default function Input ({
                 name={name}
                 placeholder={placeholder}
                 onChange={handleChange}
+                disabled={disabled}
             />
         </div>
     </div>

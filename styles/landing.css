@@ -70,11 +70,13 @@ a {
 @media screen and (max-width: 900px) {
     body {
         font-size: 14px;
+        --width-size: 3em;
     }
 }
 
 @media screen and (max-width: 600px) {
     body {
         font-size: 12px;
+        --width-size: 1em;
     }
 }

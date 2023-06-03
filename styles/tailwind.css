@@ -4305,4 +4305,16 @@ select {
   }
 }
 
-@media (min-width: 1536px) {}
+
+/* ------------------------------------------------------------- MEDIAQUERIES */
+@media screen and (max-width: 900px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 10px;
+  }
+}

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useCitations } from '@/hooks/useCitations'
 import InputSearch from '../forms/InputSearch'
 
-const HEADS = ['', 'Mascota', 'Veterinario', 'Día de atención', 'Hora de atención', 'Motivo', 'Estado']
+const HEADS = ['', 'Mascota', 'Veterinario', 'Día de atención', 'Hora de atención', 'Estado']
 
 export default function ListOfCitations () {
   const color = 'light'
@@ -24,7 +24,7 @@ export default function ListOfCitations () {
     <>
       <div
         className={
-          'relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded ' +
+          'relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded py-5 ' +
           (color === 'light' ? 'bg-white' : 'bg-blueGray-700 text-white')
         }
       >
@@ -44,8 +44,7 @@ export default function ListOfCitations () {
               <Link
                 href="/admin/citations/add"
                 className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                >
+              >
                 Agregar cita
               </Link>
             </div>
@@ -53,7 +52,7 @@ export default function ListOfCitations () {
         </div>
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+            <div className="relative w-full px-2 max-w-full flex-grow flex-1">
                 <InputSearch items={data} setItemsFiltered={setCitationsFiltered}/>
             </div>
           </div>
@@ -81,7 +80,6 @@ export default function ListOfCitations () {
             <tbody>
               {dataFiltered.map && dataFiltered?.map((citation, index) => {
                 const {
-                  reasonOfCitation,
                   dateOfAttention,
                   hourOfAttention,
                   pet,
@@ -99,10 +97,10 @@ export default function ListOfCitations () {
                   </Link>
                 </th>
                 <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                    {pet.name}
+                    {pet?.name}
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {vet.name}
+                    {vet?.name}
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   {dateOfAttention.substring(0, 10)}
@@ -110,11 +108,6 @@ export default function ListOfCitations () {
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   <div className="flex">
                     {hourOfAttention}
-                  </div>
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    {reasonOfCitation}
                   </div>
                 </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">

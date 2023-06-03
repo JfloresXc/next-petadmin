@@ -5,7 +5,13 @@ import { useCitations } from '@/hooks/useCitations'
 import Link from 'next/link'
 
 function CitationDetail () {
-  const { getCitationForId, cancelCitation, attentCitation, STATES } = useCitations()
+  const {
+    getCitationForId,
+    cancelCitation,
+    attentCitation,
+    rescheduleCitation,
+    STATES
+  } = useCitations()
   const router = useRouter()
   const id = router.query.id
   const [citation, setCitation] = useState({ })
@@ -76,7 +82,7 @@ function CitationDetail () {
                 </span>
               </p>
             </div>
-            <div className={(state === 2 || state === 3) && 'hidden'}>
+            <div className={(state !== 1) && 'hidden'}>
               <div className="relative w-auto pl-4 flex-initial mt-3 mb-5 ">
                   <button onClick={async () => await attentCitation(id)}>
                     <div
@@ -93,7 +99,16 @@ function CitationDetail () {
                         'text-white p-3 text-center inline-flex items-center justify-center h-12 shadow-lg bg-red-500 mr-3 rounded'
                       }
                     >
-                      Anular
+                      Cancelar
+                    </div>
+                  </button>
+                  <button onClick={async () => await rescheduleCitation(id)}>
+                    <div
+                      className={
+                        'text-white p-3 text-center inline-flex items-center justify-center h-12 shadow-lg bg-teal-500 mr-3 rounded'
+                      }
+                    >
+                      Reprogramar
                     </div>
                   </button>
                   <button>

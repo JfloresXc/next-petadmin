@@ -13,6 +13,8 @@ export default function FormLogin () {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    if (isLoading) return
+
     await login({ email, password })
   }
 

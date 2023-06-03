@@ -40,7 +40,7 @@ function Dropdown ({ linkEdit = '', linkDelete = '' }) {
                 </Link>
               )}
             </Menu.Item>
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <Link
                   href={linkDelete}
@@ -52,7 +52,7 @@ function Dropdown ({ linkEdit = '', linkDelete = '' }) {
                   Eliminar
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
           </div>
         </Menu.Items>
       </Transition>

@@ -3,6 +3,7 @@ import { handleError } from '@/utils/error'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useError } from './useError'
+import { compareDates } from '@/utils/dates'
 
 export function useCitations () {
   const STATES = ['', 'Pendiente', 'Atendido', 'Cancelado', 'Reprogramado']
@@ -11,6 +12,18 @@ export function useCitations () {
   const [citationsFiltered, setCitationsFiltered] = useState([])
   const { tryCatchReturn, tryCatchAction } = useError()
   const router = useRouter()
+
+  const setFilterToData = (data) => {
+    const dataFiltered = data.map((item) => {
+      return {
+        ...item,
+        petName: item.pet.name + ' ' + item.pet.surname,
+        vetName: item.vet.name + ' ' + item.vet.surname
+      }
+    })
+    setCitationsFiltered(dataFiltered)
+    setCitations(dataFiltered)
+  }
 
   const getAllCitations = async () => {
     return tryCatchAction(async () => {
@@ -24,8 +37,7 @@ export function useCitations () {
       const data = await response.json()
       return data
     }, async (data) => {
-      setCitations(data)
-      setCitationsFiltered(data)
+      setFilterToData(data)
     })
   }
 
@@ -49,6 +61,24 @@ export function useCitations () {
         {
           method: 'POST',
           body: JSON.stringify({ id }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      const data = await response.json()
+      return data
+    })
+  }
+
+  const validateDateOfAttention = async ({ id, dateOfAttention, hourOfAttention }) => {
+    return tryCatchReturn(async () => {
+      const bandDate = compareDates({ firstDate: new Date(), secondDate: new Date(dateOfAttention) })
+      if (bandDate === 1) return { isError: true, message: 'La fecha de atención no puede ser menor a la fecha actual' }
+
+      const response = await fetch(`${API_URL_API_FRONTEND}/citations/validateDateOfAttention`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ id, dateOfAttention, hourOfAttention }),
           headers: {
             'Content-Type': 'application/json'
           }
@@ -88,7 +118,24 @@ export function useCitations () {
       const data = await response.json()
       return data
     }, async () => {
-      router.push('/admin/citations/')
+      router.push('/admin/citations/list')
+    })
+  }
+
+  const rescheduleCitation = async (id) => {
+    tryCatchAction(async () => {
+      const response = await fetch(`${API_URL_API_FRONTEND}/citations/reschedule`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ id }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      const data = await response.json()
+      return data
+    }, async (response) => {
+      router.push('/admin/citations/edit/' + response.id)
     })
   }
 
@@ -110,6 +157,8 @@ export function useCitations () {
     editCitation,
     cancelCitation,
     attentCitation,
+    rescheduleCitation,
+    validateDateOfAttention,
     STATES,
     COLORS
   }

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import RowDropdown from '../Dropdowns/RowDropdown'
-import Link from 'next/link'
 import { usePets } from '@/hooks/usePets'
 import InputSearch from '../forms/InputSearch'
+import ButtonAdmin from '../button/ButtonAdmin'
 
 const HEADS = ['Nombre', 'Información médica', 'Fecha de Cumpleaños', 'Nombre de cliente', 'Raza', 'Peso']
 
@@ -23,7 +23,7 @@ export default function ListOfPets () {
     <>
       <div
         className={
-          'relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded ' +
+          'relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded py-5 ' +
           (color === 'light' ? 'bg-white' : 'bg-blueGray-700 text-white')
         }
       >
@@ -40,19 +40,16 @@ export default function ListOfPets () {
               </h3>
             </div>
             <div>
-              <Link
+              <ButtonAdmin
                 href="/admin/pets/add"
-                className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                type="button"
-                >
-                Agregar mascota
-                </Link>
+                label="Agregar mascota"
+              />
             </div>
           </div>
         </div>
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+            <div className="relative w-full px-2 max-w-full flex-grow flex-1">
                 <InputSearch items={data} setItemsFiltered={setPetsFiltered}/>
             </div>
           </div>
