@@ -125,7 +125,7 @@ export default function Footer () {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-blueGray-500 font-semibold py-1">
-                Copyright © {new Date().getFullYear()} Orejitas y colitas by{' '}
+                Copyright © {new Date().getFullYear()} Orejotas y colitas by{' '}
                 <a
                   href="https://jfloresxc.github.io"
                   target='_blank'

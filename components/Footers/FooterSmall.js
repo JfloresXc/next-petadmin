@@ -15,7 +15,7 @@ export default function FooterSmall (props) {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="mx-auto w-full md:w-4/12 px-4">
               <div className="text-sm text-white font-semibold py-1 text-center">
-              Copyright © {new Date().getFullYear()} Orejitas y colitas by{' '}
+              Copyright © {new Date().getFullYear()} Orejotas y colitas by{' '}
                 <a
                   href="https://jfloresxc.github.io"
                   target='_blank'

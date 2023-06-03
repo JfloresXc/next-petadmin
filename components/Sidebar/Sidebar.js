@@ -22,7 +22,7 @@ export default function Sidebar () {
             <div
               className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             >
-              Orejitas y colitas admin
+              Orejotas y colitas admin
             </div>
           </Link>
           {/* User */}
@@ -46,7 +46,7 @@ export default function Sidebar () {
                     <div
                       className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                     >
-                      Orejitas y colitas admin
+                      Orejotas y colitas admin
                     </div>
                   </Link>
                 </div>

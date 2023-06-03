@@ -6,7 +6,7 @@ export default function Hero () {
           <div className="w-full">
             <div className="">
               <h1 className="hero__title h1 fonts-bold lg:text-sm">
-                Orejitas y Colitas, <b className="colors-primary">tu mascota</b> es prioridad
+                Orejotas y Colitas, <b className="colors-primary">tu mascota</b> es prioridad
               </h1>
               <p className="mt-4 text-sm leading-relaxed text-blueGray-500 hero__description">
                 Orejotas y Colitas es una veterinaria dedicada al cuidado y bienestar de las mascotas. Es un lugar acogedor y amigable, donde los animales y sus dueños se sienten cómodos y bien atendidos. El nombre Orejotas y Colitas refleja el enfoque cariñoso y divertido que se tiene hacia los animales, destacando sus características especiales.

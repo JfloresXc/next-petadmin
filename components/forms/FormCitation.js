@@ -6,6 +6,7 @@ import { usePets } from '@/hooks/usePets'
 import { useVets } from '@/hooks/useVets'
 import { useRouter } from 'next/router'
 import { useCitations } from '@/hooks/useCitations'
+import { setMessageSuccess } from '@/utils/alerts'
 
 export default function FormCitation () {
   const { pets, getAllPets } = usePets()
@@ -35,7 +36,7 @@ export default function FormCitation () {
     reasonOfCitation = '',
     dateOfAttention = '',
     hourOfAttention = '',
-    id = '-1',
+    id = '',
     idPet = '',
     idVet = ''
   } = citation
@@ -66,15 +67,17 @@ export default function FormCitation () {
     event.preventDefault()
 
     const response = await validateDateOfAttention({
-      id,
+      id: id || '-1',
       dateOfAttention,
       hourOfAttention
     })
 
     if (response.isError) return
 
-    if (id === -1) addCitation(citation)
-    else editCitation(id, citation)
+    if (!id) await addCitation(citation)
+    else await editCitation(id, citation)
+
+    setMessageSuccess({ message: 'Successfully saved' })
   }
 
   const handleChange = (event) => {
@@ -105,7 +108,7 @@ export default function FormCitation () {
                         name={'idPet'}
                         handleChange={handleChange}
                         defaultValue={idPet}
-                        items={pets}
+                        items={(pets || []).map((petKey) => ({ ...petKey, name: petKey.name + ' - ' + petKey?.client?.dni }))}
                         disabled={isReprogrammed}
                     />
                     <Textarea

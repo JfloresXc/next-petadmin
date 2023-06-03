@@ -63,11 +63,11 @@ function MapExample () {
       position: myLatlng,
       map,
       animation: google.maps.Animation.DROP,
-      title: 'Orejitas y colitas!'
+      title: 'Orejotas y colitas!'
     })
 
     const contentString =
-      '<div class="info-window-content"><h2>Orejitas y colitas</h2>' +
+      '<div class="info-window-content"><h2>Orejotas y colitas</h2>' +
       '<p>A free Admin for Tailwind CSS, React, React Hooks, and NextJS.</p></div>'
 
     const infowindow = new google.maps.InfoWindow({

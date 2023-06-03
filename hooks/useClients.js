@@ -21,8 +21,10 @@ export function useClients () {
       })
     const data = await response.json()
     handleError(data)
-    setClients(data)
-    setClientsFiltered(data)
+
+    const dataModified = data.map((item) => { return { ...item, fullName: item.name + ' ' + item.surname + ' - ' + item.dni } })
+    setClients(dataModified)
+    setClientsFiltered(dataModified)
     hideLoading()
     return data
   }

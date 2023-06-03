@@ -5,6 +5,7 @@ import { useClients } from '@/hooks/useClients'
 import { useRouter } from 'next/router'
 import Select from './Select'
 import { usePets } from '@/hooks/usePets'
+import { setMessageSuccess } from '@/utils/alerts'
 
 export default function FormPet () {
   const { getAllClients, clients } = useClients()
@@ -40,8 +41,10 @@ export default function FormPet () {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!id) addPet(pet)
-    else editPet(id, pet)
+    if (!id) await addPet(pet)
+    else await editPet(id, pet)
+
+    setMessageSuccess({ message: 'Successfully saved' })
   }
 
   const handleChange = (event) => {
@@ -102,7 +105,7 @@ export default function FormPet () {
                     defaultValue={pet.breed}
                 />
                 <InputGroup
-                    label='Peso'
+                    label='Peso kg.'
                     name={'weight'}
                     placeholder={'Peso'}
                     handleChange={handleChange}
@@ -124,7 +127,7 @@ export default function FormPet () {
                     placeholder={'Dueño'}
                     handleChange={handleChange}
                     defaultValue={pet.client}
-                    items={clients}
+                    items={clients.map((clientKey) => ({ ...clientKey, name: clientKey.fullName }))}
                 />
 
                 <Textarea

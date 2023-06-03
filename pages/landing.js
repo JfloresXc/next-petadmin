@@ -33,7 +33,7 @@ export default function Landing () {
                   </h1>
                   <p className="mt-4 text-lg text-blueGray-200">
                     This is a simple example of a Landing Page you can build
-                    using Orejitas y colitas. It features multiple CSS components
+                    using Orejotas y colitas. It features multiple CSS components
                     based on the Tailwind CSS design system.
                   </p>
                 </div>
@@ -130,7 +130,7 @@ export default function Landing () {
                   JavaScript.
                 </p>
                 <Link href="/" className="font-bold text-blueGray-700 mt-8">
-                    Check Orejitas y colitas!
+                    Check Orejotas y colitas!
                 </Link>
               </div>
 
