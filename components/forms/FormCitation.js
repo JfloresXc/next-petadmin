@@ -6,7 +6,6 @@ import { usePets } from '@/hooks/usePets'
 import { useVets } from '@/hooks/useVets'
 import { useRouter } from 'next/router'
 import { useCitations } from '@/hooks/useCitations'
-import { setMessageSuccess } from '@/utils/alerts'
 
 export default function FormCitation () {
   const { pets, getAllPets } = usePets()
@@ -76,8 +75,6 @@ export default function FormCitation () {
 
     if (!id) await addCitation(citation)
     else await editCitation(id, citation)
-
-    setMessageSuccess({ message: 'Successfully saved' })
   }
 
   const handleChange = (event) => {

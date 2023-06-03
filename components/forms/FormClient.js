@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import InputGroup from './Input'
 import { useClients } from '@/hooks/useClients'
 import { useRouter } from 'next/router'
-import { setMessageSuccess } from '@/utils/alerts'
 
 export default function FormClient () {
   const { addClient, getClientForId, editClient } = useClients()
@@ -31,8 +30,6 @@ export default function FormClient () {
 
     if (!id) await addClient(client)
     else await editClient(id, client)
-
-    setMessageSuccess({ message: 'Successfully saved' })
   }
 
   const handleChange = (event) => {

@@ -2,6 +2,7 @@ import { API_URL_API_FRONTEND } from '@/settings'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useError } from './useError'
+import { setMessageSuccess } from '@/utils/alerts'
 
 export function useVets () {
   const [vets, setVets] = useState([])
@@ -54,6 +55,7 @@ export function useVets () {
       const data = await response.json()
       return data
     }, async () => {
+      setMessageSuccess({ message: 'Successfully saved' })
       router.push('/admin/vets/list')
     })
   }
@@ -71,6 +73,7 @@ export function useVets () {
       const data = await response.json()
       return data
     }, async () => {
+      setMessageSuccess({ message: 'Successfully saved' })
       router.push('/admin/vets/list')
     })
   }

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import InputGroup from './Input'
 import { useVets } from '@/hooks/useVets'
 import { useRouter } from 'next/router'
-import { setMessageSuccess } from '@/utils/alerts'
 
 export default function FormVet () {
   const { addVet, getVetForId, editVet } = useVets()
@@ -31,8 +30,6 @@ export default function FormVet () {
 
     if (!id) await addVet(vet)
     else await editVet(id, vet)
-
-    setMessageSuccess({ message: 'Successfully saved' })
   }
 
   const handleChange = (event) => {

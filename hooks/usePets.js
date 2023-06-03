@@ -3,6 +3,7 @@ import { handleError } from '@/utils/error'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useLoading } from './useLoading'
+import { setMessageSuccess } from '@/utils/alerts'
 
 export function usePets () {
   const [pets, setPets] = useState([])
@@ -48,7 +49,11 @@ export function usePets () {
       const data = await response.json()
       handleError(data)
       hideLoading()
-      if (!data.isError) router.push('/admin/pets/list')
+
+      if (!data.isError) {
+        setMessageSuccess({ message: 'Successfully saved' })
+        router.push('/admin/pets/list')
+      }
     } catch (error) {
       handleError({ isError: true, message: error.message })
       hideLoading()
@@ -81,7 +86,10 @@ export function usePets () {
       })
     const data = await response.json()
     handleError(data)
-    if (!data.isError) router.push('/admin/pets/list')
+    if (!data.isError) {
+      router.push('/admin/pets/list')
+      setMessageSuccess({ message: 'Successfully saved' })
+    }
   }
 
   return {

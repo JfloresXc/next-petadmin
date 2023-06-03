@@ -3,6 +3,7 @@ import { handleError } from '@/utils/error'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useLoading } from './useLoading'
+import { setMessageSuccess } from '@/utils/alerts'
 
 export function useClients () {
   const [clients, setClients] = useState([])
@@ -40,7 +41,10 @@ export function useClients () {
       })
     const data = await response.json()
     handleError(data)
-    if (!data.isError) router.push('/admin/clients/list')
+    if (!data.isError) {
+      setMessageSuccess({ message: 'Successfully saved' })
+      router.push('/admin/clients/list')
+    }
   }
 
   const getClientForId = async (id) => {
@@ -75,7 +79,10 @@ export function useClients () {
       })
     const data = await response.json()
     handleError(data)
-    if (!data.isError) router.push('/admin/clients/list')
+    if (!data.isError) {
+      setMessageSuccess({ message: 'Successfully saved' })
+      router.push('/admin/clients/list')
+    }
   }
 
   return {

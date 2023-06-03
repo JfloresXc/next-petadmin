@@ -5,7 +5,6 @@ import { useClients } from '@/hooks/useClients'
 import { useRouter } from 'next/router'
 import Select from './Select'
 import { usePets } from '@/hooks/usePets'
-import { setMessageSuccess } from '@/utils/alerts'
 
 export default function FormPet () {
   const { getAllClients, clients } = useClients()
@@ -43,8 +42,6 @@ export default function FormPet () {
 
     if (!id) await addPet(pet)
     else await editPet(id, pet)
-
-    setMessageSuccess({ message: 'Successfully saved' })
   }
 
   const handleChange = (event) => {

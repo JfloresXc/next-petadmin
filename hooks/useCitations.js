@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useError } from './useError'
 import { compareDates } from '@/utils/dates'
+import { setMessageSuccess } from '@/utils/alerts'
 
 export function useCitations () {
   const STATES = ['', 'Pendiente', 'Atendido', 'Cancelado', 'Reprogramado']
@@ -52,7 +53,10 @@ export function useCitations () {
       })
     const data = await response.json()
     handleError(data)
-    if (!data.isError) router.push('/admin/citations/list')
+    if (!data.isError) {
+      setMessageSuccess({ message: 'Successfully saved' })
+      router.push('/admin/citations/list')
+    }
   }
 
   const getCitationForId = async (id) => {
@@ -72,8 +76,11 @@ export function useCitations () {
 
   const validateDateOfAttention = async ({ id, dateOfAttention, hourOfAttention }) => {
     return tryCatchReturn(async () => {
+      if (dateOfAttention === '') return { isError: true, message: 'The date of attention is obligatory' }
+      if (hourOfAttention === '') return { isError: true, message: 'The hour of attention is obligatory ' }
+
       const bandDate = compareDates({ firstDate: new Date(), secondDate: new Date(dateOfAttention) })
-      if (bandDate === 1) return { isError: true, message: 'La fecha de atención no puede ser menor a la fecha actual' }
+      if (bandDate === 1) return { isError: true, message: 'The date of attention cannot be less than the real date' }
 
       const response = await fetch(`${API_URL_API_FRONTEND}/citations/validateDateOfAttention`,
         {
@@ -101,6 +108,7 @@ export function useCitations () {
       const data = await response.json()
       return data
     }, (data) => {
+      setMessageSuccess({ message: 'Successfully saved' })
       router.push('/admin/citations/list')
     })
   }
