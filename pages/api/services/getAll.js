@@ -4,7 +4,7 @@ import { getHeaders } from '@/utils/headers'
 export default async function handler(req, res) {
   const { headers } = getHeaders(req)
   try {
-    const url = `${API_URL_SERVER_BACKEND}/citation`
+    const url = `${API_URL_SERVER_BACKEND}/service`
     const response = await fetch(url, {
       method: 'GET',
       headers,
