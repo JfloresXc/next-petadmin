@@ -97,5 +97,6 @@ export function useServices() {
     editService,
     servicesFiltered,
     setServicesFiltered,
+    setServices,
   }
 }
