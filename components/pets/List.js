@@ -4,15 +4,22 @@ import { usePets } from '@/hooks/usePets'
 import InputSearch from '../forms/InputSearch'
 import ButtonAdmin from '../button/ButtonAdmin'
 
-const HEADS = ['Nombre', 'Información médica', 'Fecha de Cumpleaños', 'Nombre de cliente', 'Raza', 'Peso']
+const HEADS = [
+  'Nombre',
+  'Información médica',
+  'Fecha de Cumpleaños',
+  'Nombre de cliente',
+  'Raza',
+  'Peso',
+]
 
-export default function ListOfPets () {
+export default function ListOfPets() {
   const color = 'light'
   const {
     pets: data,
     petsFiltered: dataFiltered,
     getAllPets,
-    setPetsFiltered
+    setPetsFiltered,
   } = usePets()
 
   useEffect(() => {
@@ -40,17 +47,14 @@ export default function ListOfPets () {
               </h3>
             </div>
             <div>
-              <ButtonAdmin
-                href="/admin/pets/add"
-                label="Agregar mascota"
-              />
+              <ButtonAdmin href="/admin/pets/add" label="Agregar mascota" />
             </div>
           </div>
         </div>
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-2 max-w-full flex-grow flex-1">
-                <InputSearch items={data} setItemsFiltered={setPetsFiltered}/>
+              <InputSearch items={data} setItemsFiltered={setPetsFiltered} />
             </div>
           </div>
         </div>
@@ -59,61 +63,63 @@ export default function ListOfPets () {
             <thead>
               <tr>
                 {HEADS.map((headKey, index) => (
-                    <th
-                        key={index}
-                        className={
-                        'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
-                        (color === 'light'
-                          ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                          : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
-                        }
-                    >
-                        {headKey}
-                    </th>
+                  <th
+                    key={index}
+                    className={
+                      'px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left ' +
+                      (color === 'light'
+                        ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                        : 'bg-blueGray-600 text-blueGray-200 border-blueGray-500')
+                    }
+                  >
+                    {headKey}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {dataFiltered.map && dataFiltered?.map((pet, index) => {
-                const {
-                  name,
-                  medicalInformation,
-                  birthdate,
-                  client,
-                  breed,
-                  weight,
-                  id
-                } = pet
-                return <tr key={index}>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                    {name}
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {medicalInformation}
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  {birthdate.substring(0, 10)}
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex">
-                    {client?.name + ' ' + client?.surname}
-                  </div>
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    {breed}
-                  </div>
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    {weight}
-                  </div>
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                  <RowDropdown linkEdit={`/admin/pets/${id}`} />
-                </td>
-              </tr>
-              })}
+              {dataFiltered.map &&
+                dataFiltered?.map((pet, index) => {
+                  const {
+                    name,
+                    medicalInformation,
+                    birthdate,
+                    client,
+                    breed,
+                    weight,
+                    id,
+                  } = pet
+                  return (
+                    <tr key={index}>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                        {name}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {medicalInformation}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {birthdate.substring(0, 10)}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex">
+                          {client?.name + ' ' + client?.surname}
+                        </div>
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex items-center">{breed}</div>
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        <div className="flex items-center">{weight}</div>
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                        <RowDropdown
+                          linkEdit={`/admin/pets/${id}`}
+                          linkHistorial={`/admin/pets/historial/${id}`}
+                        />
+                      </td>
+                    </tr>
+                  )
+                })}
             </tbody>
           </table>
         </div>

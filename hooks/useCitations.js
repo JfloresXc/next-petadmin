@@ -6,7 +6,7 @@ import { useError } from './useError'
 import { compareDates } from '@/utils/dates'
 import { setMessageSuccess } from '@/utils/alerts'
 
-export function useCitations () {
+export function useCitations() {
   const STATES = ['', 'Pendiente', 'Atendido', 'Cancelado', 'Reprogramado']
   const COLORS = ['', 'orange', 'emerald', 'red', 'lightBlue']
   const [citations, setCitations] = useState([])
@@ -19,7 +19,7 @@ export function useCitations () {
       return {
         ...item,
         petName: item.pet.name + ' ' + item.pet.surname,
-        vetName: item.vet.name + ' ' + item.vet.surname
+        vetName: item.vet.name + ' ' + item.vet.surname,
       }
     })
     setCitationsFiltered(dataFiltered)
@@ -27,30 +27,55 @@ export function useCitations () {
   }
 
   const getAllCitations = async () => {
-    return tryCatchAction(async () => {
-      const response = await fetch(`${API_URL_API_FRONTEND}/citations/getAll`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
+    return tryCatchAction(
+      async () => {
+        const response = await fetch(
+          `${API_URL_API_FRONTEND}/citations/getAll`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }
+        )
+        const data = await response.json()
+        return data
+      },
+      async (data) => {
+        setFilterToData(data)
+      }
+    )
+  }
+
+  const getCitationsForPet = async ({ idPet }) => {
+    return tryCatchAction(
+      async () => {
+        const url = `${API_URL_API_FRONTEND}/citations/getForPet`
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ idPet }),
         })
-      const data = await response.json()
-      return data
-    }, async (data) => {
-      setFilterToData(data)
-    })
+        const data = await response.json()
+        const dataFiltered = data.filter((item) => item.state === 2)
+        return dataFiltered
+      },
+      async (data) => {
+        setFilterToData(data)
+      }
+    )
   }
 
   const addCitation = async (citation) => {
-    const response = await fetch(`${API_URL_API_FRONTEND}/citations/add`,
-      {
-        method: 'POST',
-        body: JSON.stringify(citation),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+    const response = await fetch(`${API_URL_API_FRONTEND}/citations/add`, {
+      method: 'POST',
+      body: JSON.stringify(citation),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     const data = await response.json()
     handleError(data)
     if (!data.isError) {
@@ -61,98 +86,154 @@ export function useCitations () {
 
   const getCitationForId = async (id) => {
     return tryCatchReturn(async () => {
-      const response = await fetch(`${API_URL_API_FRONTEND}/citations/getForId`,
+      const response = await fetch(
+        `${API_URL_API_FRONTEND}/citations/getForId`,
         {
           method: 'POST',
           body: JSON.stringify({ id }),
           headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       const data = await response.json()
       return data
     })
   }
 
-  const validateDateOfAttention = async ({ id, dateOfAttention, hourOfAttention }) => {
+  const validateDateOfAttention = async ({
+    id,
+    dateOfAttention,
+    hourOfAttention,
+  }) => {
     return tryCatchReturn(async () => {
-      if (dateOfAttention === '') return { isError: true, message: 'The date of attention is obligatory' }
-      if (hourOfAttention === '') return { isError: true, message: 'The hour of attention is obligatory ' }
+      if (dateOfAttention === '')
+        return { isError: true, message: 'The date of attention is obligatory' }
+      if (hourOfAttention === '')
+        return {
+          isError: true,
+          message: 'The hour of attention is obligatory ',
+        }
 
-      const bandDate = compareDates({ firstDate: new Date(), secondDate: new Date(dateOfAttention) })
-      if (bandDate === 1) return { isError: true, message: 'The date of attention cannot be less than the real date' }
+      const bandDate = compareDates({
+        firstDate: new Date(),
+        secondDate: new Date(dateOfAttention),
+      })
+      if (bandDate === 1)
+        return {
+          isError: true,
+          message: 'The date of attention cannot be less than the real date',
+        }
 
-      const response = await fetch(`${API_URL_API_FRONTEND}/citations/validateDateOfAttention`,
+      const response = await fetch(
+        `${API_URL_API_FRONTEND}/citations/validateDateOfAttention`,
         {
           method: 'POST',
           body: JSON.stringify({ id, dateOfAttention, hourOfAttention }),
           headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       const data = await response.json()
       return data
     })
   }
 
   const editCitation = async (id, citation) => {
-    tryCatchAction(async () => {
-      const response = await fetch(`${API_URL_API_FRONTEND}/citations/edit`,
-        {
+    tryCatchAction(
+      async () => {
+        const response = await fetch(`${API_URL_API_FRONTEND}/citations/edit`, {
           method: 'POST',
           body: JSON.stringify({ ...citation, id }),
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         })
-      const data = await response.json()
-      return data
-    }, (data) => {
-      setMessageSuccess({ message: 'Successfully saved' })
-      router.push('/admin/citations/list')
-    })
+        const data = await response.json()
+        return data
+      },
+      (data) => {
+        setMessageSuccess({ message: 'Successfully saved' })
+        router.push('/admin/citations/list')
+      }
+    )
   }
 
   const editStateCitation = async ({ id, state }) => {
-    tryCatchAction(async () => {
-      const response = await fetch(`${API_URL_API_FRONTEND}/citations/editState`,
-        {
-          method: 'POST',
-          body: JSON.stringify({ id, state }),
-          headers: {
-            'Content-Type': 'application/json'
+    tryCatchAction(
+      async () => {
+        const response = await fetch(
+          `${API_URL_API_FRONTEND}/citations/editState`,
+          {
+            method: 'POST',
+            body: JSON.stringify({ id, state }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }
-        })
-      const data = await response.json()
-      return data
-    }, async () => {
-      router.push('/admin/citations/list')
-    })
+        )
+        const data = await response.json()
+        return data
+      },
+      async () => {
+        // router.push('/admin/citations/list')
+      }
+    )
   }
 
   const rescheduleCitation = async (id) => {
-    tryCatchAction(async () => {
-      const response = await fetch(`${API_URL_API_FRONTEND}/citations/reschedule`,
-        {
-          method: 'POST',
-          body: JSON.stringify({ id }),
-          headers: {
-            'Content-Type': 'application/json'
+    tryCatchAction(
+      async () => {
+        const response = await fetch(
+          `${API_URL_API_FRONTEND}/citations/reschedule`,
+          {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
           }
-        })
-      const data = await response.json()
-      return data
-    }, async (response) => {
-      router.push('/admin/citations/edit/' + response.id)
-    })
+        )
+        const data = await response.json()
+        return data
+      },
+      async (response) => {
+        router.push('/admin/citations/edit/' + response.id)
+      }
+    )
+  }
+
+  const editDescription = async (id, description) => {
+    tryCatchAction(
+      async () => {
+        const response = await fetch(
+          `${API_URL_API_FRONTEND}/citations/editDescription`,
+          {
+            method: 'POST',
+            body: JSON.stringify({ id, description }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        const data = await response.json()
+        return data
+      },
+      async () => {
+        setMessageSuccess({ message: '¡Motivo editado satisfactoriamente!' })
+      }
+    )
   }
 
   const cancelCitation = async (id) => {
     await editStateCitation({ id, state: '3' })
+    setMessageSuccess({ message: '¡Cita cancelada satisfactoriamente!' })
   }
 
   const attentCitation = async (id) => {
     await editStateCitation({ id, state: '2' })
+    setMessageSuccess({ message: '¡Cita atendida satisfactoriamente!' })
   }
 
   return {
@@ -167,7 +248,9 @@ export function useCitations () {
     attentCitation,
     rescheduleCitation,
     validateDateOfAttention,
+    editDescription,
+    getCitationsForPet,
     STATES,
-    COLORS
+    COLORS,
   }
 }

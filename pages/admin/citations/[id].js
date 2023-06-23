@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import Admin from '@/layouts/Admin'
 import { useCitations } from '@/hooks/useCitations'
 import Link from 'next/link'
+import Textarea from '@/components/forms/TextArea'
 
 function CitationDetail() {
   const {
@@ -10,21 +11,49 @@ function CitationDetail() {
     cancelCitation,
     attentCitation,
     rescheduleCitation,
+    editDescription,
     STATES,
   } = useCitations()
   const HEADERS_SERVICES = ['Nombre', 'Precio', 'Duración']
   const router = useRouter()
   const id = router.query.id
   const [citation, setCitation] = useState({})
+  const [description, setDescription] = useState('')
   const { state } = citation
 
   useEffect(() => {
     if (id) {
-      getCitationForId(id).then((citation) => {
-        if (citation) setCitation(citation)
-      })
+      getCitation({ id })
     }
   }, [setCitation])
+
+  const handleChangeDescription = (e) => {
+    setDescription(e.target.value)
+  }
+
+  const getCitation = async ({ id }) => {
+    getCitationForId(id).then((citation) => {
+      if (citation) {
+        setCitation(citation)
+        setDescription(citation?.description)
+      }
+    })
+  }
+
+  const updateDescription = async (event) => {
+    event.preventDefault()
+    await editDescription(id, description)
+  }
+
+  const attent = async () => {
+    await attentCitation(id)
+    await getCitation({ id })
+  }
+
+  const cancel = async () => {
+    await cancelCitation(id)
+    await getCitation({ id })
+  }
 
   return (
     <>
@@ -159,7 +188,7 @@ function CitationDetail() {
           </div>
           <div className={state !== 1 && 'hidden'}>
             <div className="relative w-auto pl-4 flex-initial mt-3 mb-5">
-              <button onClick={async () => await attentCitation(id)}>
+              <button onClick={attent}>
                 <div
                   className={
                     'text-white p-3 text-center inline-flex items-center justify-center h-12 shadow-lg bg-emerald-500 mr-3 rounded mt-3'
@@ -168,7 +197,7 @@ function CitationDetail() {
                   Atender
                 </div>
               </button>
-              <button onClick={async () => await cancelCitation(id)}>
+              <button onClick={cancel}>
                 <div
                   className={
                     'text-white p-3 text-center inline-flex items-center justify-center h-12 shadow-lg bg-red-500 mr-3 rounded'
@@ -197,6 +226,27 @@ function CitationDetail() {
                 </Link>
               </button>
             </div>
+          </div>
+
+          <div className={state !== 2 && 'hidden'}>
+            <form onSubmit={updateDescription}>
+              <div className="flex flex-wrap mt-3 p-3">
+                <Textarea
+                  label="Observación"
+                  name={'reasonOfCitation'}
+                  placeholder={'Motivo'}
+                  handleChange={handleChangeDescription}
+                  defaultValue={citation?.description}
+                  widthFlex="100"
+                />
+                <button
+                  className="block ml-3 bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
+                  type="submit"
+                >
+                  Actualizar observación
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

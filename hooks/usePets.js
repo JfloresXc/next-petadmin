@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useLoading } from './useLoading'
 import { setMessageSuccess } from '@/utils/alerts'
 
-export function usePets () {
+export function usePets() {
   const [pets, setPets] = useState([])
   const [petsFiltered, setPetsFiltered] = useState([])
   const { showLoading, hideLoading } = useLoading()
@@ -15,13 +15,12 @@ export function usePets () {
     showLoading()
 
     try {
-      const response = await fetch(`${API_URL_API_FRONTEND}/pets/getAll`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+      const response = await fetch(`${API_URL_API_FRONTEND}/pets/getAll`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       const data = await response.json()
       handleError(data)
       setPets(data)
@@ -38,14 +37,13 @@ export function usePets () {
     showLoading()
 
     try {
-      const response = await fetch(`${API_URL_API_FRONTEND}/pets/add`,
-        {
-          method: 'POST',
-          body: JSON.stringify(pet),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+      const response = await fetch(`${API_URL_API_FRONTEND}/pets/add`, {
+        method: 'POST',
+        body: JSON.stringify(pet),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       const data = await response.json()
       handleError(data)
       hideLoading()
@@ -61,14 +59,13 @@ export function usePets () {
   }
 
   const getPetForId = async (id) => {
-    const response = await fetch(`${API_URL_API_FRONTEND}/pets/getForId`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ id }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+    const response = await fetch(`${API_URL_API_FRONTEND}/pets/getForId`, {
+      method: 'POST',
+      body: JSON.stringify({ id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     const data = await response.json()
     handleError(data)
 
@@ -76,14 +73,13 @@ export function usePets () {
   }
 
   const editPet = async (id, pet) => {
-    const response = await fetch(`${API_URL_API_FRONTEND}/pets/edit`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ ...pet, id }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+    const response = await fetch(`${API_URL_API_FRONTEND}/pets/edit`, {
+      method: 'POST',
+      body: JSON.stringify({ ...pet, id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     const data = await response.json()
     handleError(data)
     if (!data.isError) {
@@ -99,6 +95,6 @@ export function usePets () {
     addPet,
     editPet,
     petsFiltered,
-    setPetsFiltered
+    setPetsFiltered,
   }
 }
