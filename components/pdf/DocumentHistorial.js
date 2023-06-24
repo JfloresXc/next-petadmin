@@ -81,14 +81,14 @@ const VeterinaryPDF = ({
             <Text style={styles.subsubtitle}>
               Información de la veterinaria
             </Text>
-            <Text style={styles.subtext}>RUC: 123456789</Text>
-            <Text style={styles.subtext}>Teléfono: 123456789</Text>
+            <Text style={styles.subtext}>RUC: 20607050999</Text>
+            <Text style={styles.subtext}>Teléfono: (01) 2741810</Text>
             <Text style={styles.subtext}>
               Correo: orejotasycolitas@gmail.com
             </Text>
             <Text style={styles.subtext}>
-              Dirección: Urb Prolongacion Benavides Etapa 2, Santiago de Surco
-              15039
+              Dirección: Calle Loma de las Gardenias Mz. X4 Lote 7 Surco - Lima,
+              Provincia de Lima
             </Text>
           </View>
           <View style={styles.sectionFather}>
