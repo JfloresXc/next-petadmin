@@ -4,11 +4,14 @@ import { useCitations } from '@/hooks/useCitations'
 import InputSearch from '../forms/InputSearch'
 import { useRouter } from 'next/router'
 import { usePets } from '@/hooks/usePets'
+import DocumentHistorial from '../pdf/DocumentHistorial'
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
 
 const HEADS = ['', 'Veterinario', 'Fecha', 'Hora', 'Observación', 'Servicios']
 
 export default function ListHistorial() {
   const color = 'light'
+  const [show, setShow] = useState(false)
   const {
     citations: data,
     citationsFiltered: dataFiltered,
@@ -36,6 +39,14 @@ export default function ListHistorial() {
           (color === 'light' ? 'bg-white' : 'bg-blueGray-700 text-white')
         }
       >
+        <button className="hidden" onClick={() => setShow(true)}>
+          Ver
+        </button>
+        {show && (
+          <PDFViewer style={{ width: '100%', height: '90vh' }}>
+            <DocumentHistorial />
+          </PDFViewer>
+        )}
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <span className="ml-2 pl-2.5 font-semibold text-xl text-blueGray-700">
             Historial de citas de <b>{pet?.name}</b>
@@ -119,6 +130,35 @@ export default function ListHistorial() {
                         >
                           <i className="fas fa-eye"></i>
                         </Link>
+                        <PDFDownloadLink
+                          document={
+                            <DocumentHistorial
+                              client={{
+                                name: `${pet?.client?.name} ${pet?.client?.surname}`,
+                                phone: pet?.client?.phone,
+                                dni: pet?.client?.dni,
+                              }}
+                              pet={pet}
+                              citation={{
+                                dateOfAttention: dateOfAttention.substring(
+                                  0,
+                                  10
+                                ),
+                                hourOfAttention,
+                                services: services
+                                  ?.map((service) => service.name)
+                                  .join(' - '),
+                                nameVet: vet?.name,
+                              }}
+                              observation={description}
+                            />
+                          }
+                          fileName={`historialcitas-${pet?.name}.pdf`}
+                        >
+                          <button className="text-blue-500 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                            <i className="fas fa-file-arrow-down"></i>
+                          </button>
+                        </PDFDownloadLink>
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         {vet?.name}

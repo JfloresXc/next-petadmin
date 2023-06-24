@@ -109,7 +109,7 @@ export default function ListOfPets() {
                         <div className="flex items-center">{breed}</div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <div className="flex items-center">{weight}</div>
+                        <div className="flex items-center">{weight} kg</div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <RowDropdown
